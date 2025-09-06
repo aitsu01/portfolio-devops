@@ -20,7 +20,7 @@ export default function MessageTable({ messages }: { messages: any[] }) {
         placeholder="🔍 Cerca per nome, email o messaggio"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        className="mb-4 px-3 py-2 border rounded-lg w-full"
+        className="mb-4 px-3 py-2 border rounded-lg w-full text-gray-900"
       />
 
       <div className="overflow-x-auto">
