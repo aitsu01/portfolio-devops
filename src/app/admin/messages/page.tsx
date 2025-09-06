@@ -25,7 +25,7 @@ export default async function AdminMessagesPage() {
         </div>
 
         {messages.length === 0 ? (
-          <p className="text-gray-600 text-center">Nessun messaggio trovato.</p>
+          <p className="text-gray-600 text-center text-gray-900">Nessun messaggio trovato.</p>
         ) : (
           <MessageTable messages={messages} />
         )}

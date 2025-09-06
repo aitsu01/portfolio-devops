@@ -27,24 +27,24 @@ export default function MessageTable({ messages }: { messages: any[] }) {
         <table className="w-full border-collapse bg-white shadow rounded-xl">
           <thead className="bg-gray-100">
             <tr>
-              <th className="px-4 py-2 border">Nome</th>
-              <th className="px-4 py-2 border">Email</th>
-              <th className="px-4 py-2 border">Messaggio</th>
-              <th className="px-4 py-2 border">Data</th>
-              <th className="px-4 py-2 border">Azioni</th>
+              <th className="px-4 py-2 border text-gray-900">Nome</th>
+              <th className="px-4 py-2 border text-gray-900">Email</th>
+              <th className="px-4 py-2 border text-gray-900">Messaggio</th>
+              <th className="px-4 py-2 border text-gray-900">Data</th>
+              <th className="px-4 py-2 border text-gray-900">Azioni</th>
             </tr>
           </thead>
           <tbody>
             {filtered.map((m) => (
               <tr key={m.id} className="hover:bg-gray-50">
-                <td className="px-4 py-2 border font-medium">{m.name}</td>
+                <td className="px-4 py-2 border font-medium text-blue-600">{m.name}</td>
                 <td className="px-4 py-2 border text-blue-600">{m.email}</td>
-                <td className="px-4 py-2 border">{m.content}</td>
-                <td className="px-4 py-2 border text-sm text-gray-500">
+                <td className="px-4 py-2 border text-blue-600">{m.content}</td>
+                <td className="px-4 py-2 border text-sm text-blue-600">
                   {new Date(m.createdAt).toLocaleString("it-IT")}
                 </td>
 
-                <td className="px-4 py-2 border text-center">
+                <td className="px-4 py-2 border text-center text-gray-600">
                     <DeleteButton id={m.id} />
                 </td>
 

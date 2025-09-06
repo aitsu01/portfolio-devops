@@ -1,9 +1,20 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
+import { checkRateLimit } from "@/lib/rateLimit"
 
-// POST /api/contact
 export async function POST(req: Request) {
   try {
+    const ip = req.headers.get("x-forwarded-for") || "global"
+
+    // max 5 richieste al minuto per IP
+    const allowed = checkRateLimit(ip, 5, 60 * 1000)
+    if (!allowed) {
+      return NextResponse.json(
+        { error: "Troppe richieste. Riprova tra un minuto." },
+        { status: 429 }
+      )
+    }
+
     const body = await req.json()
     const { name, email, message } = body
 
@@ -15,11 +26,7 @@ export async function POST(req: Request) {
     }
 
     const newMessage = await prisma.message.create({
-      data: {
-        name,
-        email,
-        content: message,
-      },
+      data: { name, email, content: message },
     })
 
     return NextResponse.json({ success: true, data: newMessage })
