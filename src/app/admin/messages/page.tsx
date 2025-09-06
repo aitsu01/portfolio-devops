@@ -1,26 +1,35 @@
-"use client"
-import useSWR from "swr"
+import { getServerSession } from "next-auth"
+import { prisma } from "@/lib/prisma"
+import { redirect } from "next/navigation"
+import authConfig from "@/app/api/auth/[...nextauth]/route"
+import LogoutButton from "./LogoutButton"
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json())
+export default async function AdminMessagesPage() {
+  const session = await getServerSession(authConfig)
 
-export default function AdminMessagesPage() {
-  const { data, error } = useSWR("/api/messages", fetcher)
+  if (!session) {
+    redirect("/admin/login")
+  }
 
-  if (error) return <div className="p-10 text-red-600">Errore nel caricamento</div>
-  if (!data) return <div className="p-10">Caricamento...</div>
+  const messages = await prisma.message.findMany({
+    orderBy: { createdAt: "desc" },
+  })
 
   return (
     <main className="min-h-screen bg-gray-50 py-16 px-6 flex flex-col items-center">
       <section className="max-w-5xl w-full">
-        <h1 className="text-4xl font-bold mb-10 text-center text-gray-900">
-          Messaggi ricevuti
-        </h1>
+        <div className="flex justify-between items-center mb-10">
+          <h1 className="text-4xl font-bold text-gray-900">
+            Messaggi ricevuti
+          </h1>
+          <LogoutButton />
+        </div>
 
-        {data.length === 0 ? (
+        {messages.length === 0 ? (
           <p className="text-gray-600 text-center">Nessun messaggio trovato.</p>
         ) : (
           <div className="space-y-4">
-            {data.map((m: any) => (
+            {messages.map((m) => (
               <div
                 key={m.id}
                 className="p-6 border rounded-xl shadow bg-white hover:shadow-lg transition"
@@ -40,3 +49,4 @@ export default function AdminMessagesPage() {
     </main>
   )
 }
+
