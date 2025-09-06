@@ -62,12 +62,12 @@ export default function Footer() {
         </div>
 
         {/* Colonna 3: Info */}
-        <div>
-          <h3 className="text-lg font-semibold mb-4 text-blue-600 ">Info</h3>
-          <p className="text-gray-600">
-            © {new Date().getFullYear()} Tutti i diritti riservati.
-          </p>
+        <div className="text-center">
+          <h3 className="text-lg font-semibold mb-5 text-blue-600">Info</h3>
+          <p className="text-gray-600" >{new Date().getFullYear()} © Gianni Citovich.</p>
         </div>
+
+
       </div>
     </footer>
   )
